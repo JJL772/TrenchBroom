@@ -38,6 +38,7 @@
 #include "Model/PointFile.h"
 #include "Renderer/BoundsGuideRenderer.h"
 #include "Renderer/Compass3D.h"
+#include "Renderer/GridRenderer3D.h"
 #include "Renderer/MapRenderer.h"
 #include "Renderer/PerspectiveCamera.h"
 #include "Renderer/RenderBatch.h"
@@ -446,7 +447,10 @@ namespace TrenchBroom {
             m_flyModeHelper->pollAndUpdate();
         }
 
-        void MapView3D::doRenderGrid(Renderer::RenderContext&, Renderer::RenderBatch&) {}
+        void MapView3D::doRenderGrid(Renderer::RenderContext&, Renderer::RenderBatch& renderBatch) {
+            auto document = kdl::mem_lock(m_document);
+            renderBatch.addOneShot(new Renderer::GridRenderer3D(*m_camera, document->worldBounds()));
+        }
 
         void MapView3D::doRenderMap(Renderer::MapRenderer& renderer, Renderer::RenderContext& renderContext, Renderer::RenderBatch& renderBatch) {
             renderer.render(renderContext, renderBatch);

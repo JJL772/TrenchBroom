@@ -44,6 +44,7 @@ namespace TrenchBroom {
             const ShaderConfig LinkArrowShader            = ShaderConfig("Link Arrow",                       { "LinkArrow.vertsh" },            { "LinkArrow.fragsh" });
             const ShaderConfig TriangleShader             = ShaderConfig("Shaded Triangles",                 { "Triangle.vertsh" },             { "Triangle.fragsh" });
             const ShaderConfig UVViewShader               = ShaderConfig("UV View",                          { "UVView.vertsh" },               { "UVView.fragsh" });
+            const ShaderConfig Grid3DShader               = ShaderConfig("3D Grid",                          { "Grid3D.vertsh" },               { "Grid.fragsh", "Grid3D.fragsh" });
         }
     }
 }
