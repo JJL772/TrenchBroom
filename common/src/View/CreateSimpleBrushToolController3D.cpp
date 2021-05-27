@@ -84,7 +84,18 @@ namespace TrenchBroom {
             if (hit.isMatch()) {
                 m_initialPoint = hit.hitPoint();
             } else {
-                m_initialPoint = inputState.defaultPointUnderMouse();
+                // If we don't hit any existing brushes/entites/whatever, trace a ray against the XY plane and use that as our base
+                const auto ray = inputState.camera().pickRay(inputState.mouseX(), inputState.mouseY());
+                vm::plane3f xy(vm::vec3f(0,0,0), vm::vec3f(0,0,1));
+                const auto dist = vm::intersect_ray_plane(ray, xy);
+
+                // If the trace fails, we're probably below the XY plane, so just use the default point under mouse
+                if(vm::is_nan(dist)) {
+                    m_initialPoint = inputState.defaultPointUnderMouse();
+                }
+                else {
+                    m_initialPoint = vm::vec3(vm::point_at_distance(ray, dist));
+                }
             }
 
             updateBounds(m_initialPoint, vm::vec3(inputState.camera().position()));
