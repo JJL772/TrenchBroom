@@ -290,6 +290,7 @@ Preference<QString> FaceRenderMode("Map view/Face render mode", "textured");
 Preference<bool> ShadeFaces("Map view/Shade faces", true);
 Preference<bool> ShowFog("Map view/Show fog", false);
 Preference<bool> ShowEdges("Map view/Show edges", true);
+Preference<bool> Show3DGrid("Map view/Show 3D Grid", true);
 
 Preference<bool> ShowSoftMapBounds("Map view/Show soft map bounds", true);
 

@@ -131,4 +131,9 @@ const ShaderConfig UVViewShader = ShaderConfig{
   {"UVView.vertsh"},
   {"UVView.fragsh"},
 };
+const ShaderConfig Grid3DShader = ShaderConfig{
+	"3D Grid",
+	{ "Grid3D.vertsh" },
+	{ "Grid.fragsh", "Grid3D.fragsh" }
+};
 } // namespace TrenchBroom::Renderer::Shaders

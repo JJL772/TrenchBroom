@@ -253,6 +253,7 @@ ViewEditor::ViewEditor(std::weak_ptr<MapDocument> document, QWidget* parent)
   , m_shadeFacesCheckBox(nullptr)
   , m_showFogCheckBox(nullptr)
   , m_showEdgesCheckBox(nullptr)
+  , m_show3DGridCheckBox(nullptr)
   , m_entityLinkRadioGroup(nullptr)
   , m_showSoftBoundsCheckBox(nullptr)
 {
@@ -500,6 +501,7 @@ QWidget* ViewEditor::createRendererPanel(QWidget* parent)
   m_shadeFacesCheckBox = new QCheckBox(tr("Shade faces"));
   m_showFogCheckBox = new QCheckBox(tr("Use fog"));
   m_showEdgesCheckBox = new QCheckBox(tr("Show edges"));
+  m_show3DGridCheckBox = new QCheckBox(tr("Show 3D Grid"));
 
   const QList<QString> EntityLinkModes = {
     "Show all entity links",
@@ -536,6 +538,7 @@ QWidget* ViewEditor::createRendererPanel(QWidget* parent)
     m_showFogCheckBox, &QAbstractButton::clicked, this, &ViewEditor::showFogChanged);
   connect(
     m_showEdgesCheckBox, &QAbstractButton::clicked, this, &ViewEditor::showEdgesChanged);
+  connect(m_show3DGridCheckBox, &QAbstractButton::clicked, this, &ViewEditor::show3DGridChanged);
 
   connect(
     m_renderModeRadioGroup,
@@ -571,6 +574,7 @@ QWidget* ViewEditor::createRendererPanel(QWidget* parent)
   layout->addWidget(m_shadeFacesCheckBox);
   layout->addWidget(m_showFogCheckBox);
   layout->addWidget(m_showEdgesCheckBox);
+  layout->addWidget(m_show3DGridCheckBox);
 
   for (auto* button : m_entityLinkRadioGroup->buttons())
   {
@@ -633,6 +637,7 @@ void ViewEditor::refreshRendererPanel()
   m_showEdgesCheckBox->setChecked(pref(Preferences::ShowEdges));
   checkButtonInGroup(m_entityLinkRadioGroup, pref(Preferences::EntityLinkMode), true);
   m_showSoftBoundsCheckBox->setChecked(pref(Preferences::ShowSoftMapBounds));
+  m_show3DGridCheckBox->setChecked(pref(Preferences::Show3DGrid));
 }
 
 void ViewEditor::showEntityClassnamesChanged(const bool checked)
@@ -740,6 +745,10 @@ void ViewEditor::entityLinkModeChanged(const int id)
   }
 }
 
+void ViewEditor::show3DGridChanged(bool checked) {
+  setPref(Preferences::Show3DGrid, checked);
+}
+
 void ViewEditor::showSoftMapBoundsChanged(const bool checked)
 {
   setPref(Preferences::ShowSoftMapBounds, checked);
@@ -761,6 +770,7 @@ void ViewEditor::restoreDefaultsClicked()
   prefs.resetToDefault(Preferences::ShowPointEntities);
   prefs.resetToDefault(Preferences::ShowBrushes);
   prefs.resetToDefault(Preferences::EntityLinkMode);
+  prefs.resetToDefault(Preferences::Show3DGrid);
   prefs.saveChanges();
 }
 

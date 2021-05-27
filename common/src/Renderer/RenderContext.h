@@ -73,6 +73,7 @@ private:
   bool m_showFog;
 
   bool m_showGrid;
+  bool m_showGrid3D = true;
   FloatType m_gridSize;
   float m_dpiScale;
 
@@ -135,6 +136,9 @@ public:
 
   const vm::bbox3f& softMapBounds() const;
   void setSoftMapBounds(const vm::bbox3f& softMapBounds);
+  
+  bool show3DGrid() const;
+  void setShow3DGrid(bool showGrid);
 
   FloatType gridSize() const;
   void setGridSize(FloatType gridSize);

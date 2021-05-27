@@ -47,6 +47,7 @@ RenderContext::RenderContext(
   , m_showPointEntityBounds(true)
   , m_showFog(false)
   , m_showGrid(true)
+  , m_showGrid3D(true)
   , m_gridSize(4)
   , m_dpiScale(1.0)
   , m_hideSelection(false)
@@ -302,5 +303,14 @@ void RenderContext::setShowSelectionGuide(const ShowSelectionGuide showSelection
     break;
   }
 }
+
+bool RenderContext::show3DGrid() const {
+  return m_showGrid3D;
+}
+
+void RenderContext::setShow3DGrid(bool showGrid) {
+  m_showGrid3D = showGrid;
+}
+
 } // namespace Renderer
 } // namespace TrenchBroom

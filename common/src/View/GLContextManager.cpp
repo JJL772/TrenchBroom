@@ -88,6 +88,7 @@ bool GLContextManager::initialize()
     kdl::fold_results(kdl::vec_transform(
                         std::vector<Renderer::ShaderConfig>{
                           Grid2DShader,
+						  Grid3DShader,
                           VaryingPCShader,
                           VaryingPUniformCShader,
                           MiniMapEdgeShader,

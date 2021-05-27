@@ -38,6 +38,7 @@
 #include "Preferences.h"
 #include "Renderer/BoundsGuideRenderer.h"
 #include "Renderer/Compass3D.h"
+#include "Renderer/GridRenderer3D.h"
 #include "Renderer/MapRenderer.h"
 #include "Renderer/PerspectiveCamera.h"
 #include "Renderer/RenderBatch.h"
@@ -556,7 +557,12 @@ void MapView3D::doPreRender()
   m_flyModeHelper->pollAndUpdate();
 }
 
-void MapView3D::doRenderGrid(Renderer::RenderContext&, Renderer::RenderBatch&) {}
+void MapView3D::doRenderGrid(Renderer::RenderContext&, Renderer::RenderBatch&) {
+  auto document = kdl::mem_lock(m_document);
+  if(context.show3DGrid()) {
+    renderBatch.addOneShot(new Renderer::GridRenderer3D(*m_camera, document->worldBounds()));
+  }
+}
 
 void MapView3D::doRenderMap(
   Renderer::MapRenderer& renderer,
