@@ -209,6 +209,7 @@ set(COMMON_SOURCE
         ${COMMON_SOURCE_DIR}/Renderer/FontTexture.cpp
         ${COMMON_SOURCE_DIR}/Renderer/FreeTypeFontFactory.cpp
         ${COMMON_SOURCE_DIR}/Renderer/GL.cpp
+        ${COMMON_SOURCE_DIR}/Renderer/GridRenderer3D.cpp
         ${COMMON_SOURCE_DIR}/Renderer/GridRenderer.cpp
         ${COMMON_SOURCE_DIR}/Renderer/GroupLinkRenderer.cpp
         ${COMMON_SOURCE_DIR}/Renderer/GroupRenderer.cpp

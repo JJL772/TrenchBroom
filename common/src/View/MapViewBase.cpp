@@ -1015,6 +1015,7 @@ void MapViewBase::doRender()
   renderContext.setShowBrushEntityBounds(pref(Preferences::ShowBrushEntityBounds));
   renderContext.setShowPointEntityBounds(pref(Preferences::ShowPointEntityBounds));
   renderContext.setShowFog(pref(Preferences::ShowFog));
+  renderContext.setShow3DGrid(pref(Preferences::Show3DGrid));
   renderContext.setShowGrid(grid.visible());
   renderContext.setGridSize(grid.actualSize());
   renderContext.setSoftMapBounds(
@@ -1027,10 +1028,10 @@ void MapViewBase::doRender()
 
   auto renderBatch = Renderer::RenderBatch{vboManager()};
 
-  doRenderGrid(renderContext, renderBatch);
   doRenderMap(m_renderer, renderContext, renderBatch);
   doRenderTools(m_toolBox, renderContext, renderBatch);
   doRenderExtras(renderContext, renderBatch);
+  doRenderGrid(renderContext, renderBatch);
 
   renderCoordinateSystem(renderContext, renderBatch);
   renderSoftMapBounds(renderContext, renderBatch);
