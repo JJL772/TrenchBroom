@@ -209,6 +209,7 @@ namespace TrenchBroom {
         Preference<bool> ShadeFaces(IO::Path("Map view/Shade faces"), true);
         Preference<bool> ShowFog(IO::Path("Map view/Show fog"), false);
         Preference<bool> ShowEdges(IO::Path("Map view/Show edges"), true);
+        Preference<bool> Show3DGrid(IO::Path("Map view/Show 3D Grid"), false);
 
         Preference<bool> ShowSoftMapBounds(IO::Path("Map view/Show soft map bounds"), true);
 

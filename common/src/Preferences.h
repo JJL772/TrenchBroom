@@ -175,6 +175,7 @@ namespace TrenchBroom {
         extern Preference<bool> ShowBrushEntityBounds;
         extern Preference<bool> ShowPointEntityBounds;
         extern Preference<bool> ShowPointEntityModels;
+        extern Preference<bool> Show3DGrid;
 
         QString faceRenderModeTextured();
         QString faceRenderModeFlat();

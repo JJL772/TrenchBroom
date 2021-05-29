@@ -39,6 +39,7 @@ namespace TrenchBroom {
         m_showBrushEntityBounds(true),
         m_showPointEntityBounds(true),
         m_showFog(false),
+        m_showGrid3D(true),
         m_showGrid(true),
         m_gridSize(4),
         m_hideSelection(false),
@@ -235,6 +236,14 @@ namespace TrenchBroom {
                         m_showSelectionGuide = ShowSelectionGuide::ForceHide;
                     break;
             }
+        }
+
+        bool RenderContext::show3DGrid() const {
+            return m_showGrid3D;
+        }
+
+        void RenderContext::setShow3DGrid(bool showGrid) {
+            m_showGrid3D = showGrid;
         }
     }
 }
