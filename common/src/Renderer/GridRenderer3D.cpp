@@ -51,7 +51,11 @@ namespace TrenchBroom {
                 const auto &camera = renderContext.camera();
                 const auto zdist = vm::abs(camera.position().z());
 
-                shader.set("Normal", vm::vec3f(0, 0, 1));
+                auto normal = vm::vec3f(0, 0, 1);
+                if(camera.position().z() < 0.0)
+                    normal = vm::vec3f(0, 0, -1);
+
+                shader.set("Normal", normal);
                 shader.set("RenderGrid", renderContext.showGrid());
                 shader.set("GridSize", static_cast<float>(renderContext.gridSize()));
                 shader.set("GridAlpha", pref(Preferences::GridAlpha));
