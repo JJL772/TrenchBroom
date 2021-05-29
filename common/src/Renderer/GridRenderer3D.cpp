@@ -36,7 +36,7 @@
 namespace TrenchBroom {
     namespace Renderer {
 
-        GridRenderer3D::GridRenderer3D(const PerspectiveCamera &camera, const vm::bbox3 &worldBounds) :
+        GridRenderer3D::GridRenderer3D(const PerspectiveCamera&, const vm::bbox3 &worldBounds) :
             m_vertexArray(VertexArray::move(vertices(worldBounds)))
         {
         }
