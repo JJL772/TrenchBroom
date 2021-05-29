@@ -215,6 +215,7 @@ namespace TrenchBroom {
         m_shadeFacesCheckBox(nullptr),
         m_showFogCheckBox(nullptr),
         m_showEdgesCheckBox(nullptr),
+        m_show3DGridCheckBox(nullptr),
         m_entityLinkRadioGroup(nullptr),
         m_showSoftBoundsCheckBox(nullptr) {
             connectObservers();
@@ -405,6 +406,7 @@ namespace TrenchBroom {
             m_shadeFacesCheckBox = new QCheckBox(tr("Shade faces"));
             m_showFogCheckBox = new QCheckBox(tr("Use fog"));
             m_showEdgesCheckBox = new QCheckBox(tr("Show edges"));
+            m_show3DGridCheckBox = new QCheckBox(tr("Show 3D Grid"));
 
             const QList<QString> EntityLinkModes = { "Show all entity links", "Show transitively selected entity links", "Show directly selected entity links", "Hide entity links" };
             const QList<QString> EntityLinkModesPrefValues = { Preferences::entityLinkModeAll(), Preferences::entityLinkModeTransitive(), Preferences::entityLinkModeDirect(), Preferences::entityLinkModeNone() };
@@ -426,6 +428,7 @@ namespace TrenchBroom {
             connect(m_shadeFacesCheckBox, &QAbstractButton::clicked, this, &ViewEditor::shadeFacesChanged);
             connect(m_showFogCheckBox, &QAbstractButton::clicked, this, &ViewEditor::showFogChanged);
             connect(m_showEdgesCheckBox, &QAbstractButton::clicked, this, &ViewEditor::showEdgesChanged);
+            connect(m_show3DGridCheckBox, &QAbstractButton::clicked, this, &ViewEditor::show3DGridChanged);
 
             connect(m_renderModeRadioGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this,
                 &ViewEditor::faceRenderModeChanged);
@@ -446,6 +449,7 @@ namespace TrenchBroom {
             layout->addWidget(m_shadeFacesCheckBox);
             layout->addWidget(m_showFogCheckBox);
             layout->addWidget(m_showEdgesCheckBox);
+            layout->addWidget(m_show3DGridCheckBox);
 
             for (auto* button : m_entityLinkRadioGroup->buttons()) {
                 layout->addWidget(button);
@@ -501,6 +505,7 @@ namespace TrenchBroom {
             m_showEdgesCheckBox->setChecked(pref(Preferences::ShowEdges));
             checkButtonInGroup(m_entityLinkRadioGroup, pref(Preferences::EntityLinkMode), true);
             m_showSoftBoundsCheckBox->setChecked(pref(Preferences::ShowSoftMapBounds));
+            m_show3DGridCheckBox->setChecked(pref(Preferences::Show3DGrid));
         }
 
         void ViewEditor::showEntityClassnamesChanged(const bool checked) {
@@ -573,6 +578,10 @@ namespace TrenchBroom {
             setPref(Preferences::ShowEdges, checked);
         }
 
+        void ViewEditor::show3DGridChanged(bool checked) {
+            setPref(Preferences::Show3DGrid, checked);
+        }
+
         void ViewEditor::entityLinkModeChanged(const int id) {
             switch (id) {
                 case 0:
@@ -609,6 +618,7 @@ namespace TrenchBroom {
             prefs.resetToDefault(Preferences::ShowPointEntities);
             prefs.resetToDefault(Preferences::ShowBrushes);
             prefs.resetToDefault(Preferences::EntityLinkMode);
+            prefs.resetToDefault(Preferences::Show3DGrid);
             prefs.saveChanges();
         }
 

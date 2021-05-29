@@ -826,6 +826,7 @@ namespace TrenchBroom {
             renderContext.setShowBrushEntityBounds(pref(Preferences::ShowBrushEntityBounds));
             renderContext.setShowPointEntityBounds(pref(Preferences::ShowPointEntityBounds));
             renderContext.setShowFog(pref(Preferences::ShowFog));
+            renderContext.setShow3DGrid(pref(Preferences::Show3DGrid));
             renderContext.setShowGrid(grid.visible());
             renderContext.setGridSize(grid.actualSize());
             renderContext.setSoftMapBounds(pref(Preferences::ShowSoftMapBounds)

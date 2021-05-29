@@ -447,9 +447,11 @@ namespace TrenchBroom {
             m_flyModeHelper->pollAndUpdate();
         }
 
-        void MapView3D::doRenderGrid(Renderer::RenderContext&, Renderer::RenderBatch& renderBatch) {
+        void MapView3D::doRenderGrid(Renderer::RenderContext& context, Renderer::RenderBatch& renderBatch) {
             auto document = kdl::mem_lock(m_document);
-            renderBatch.addOneShot(new Renderer::GridRenderer3D(*m_camera, document->worldBounds()));
+            if(context.show3DGrid()) {
+                renderBatch.addOneShot(new Renderer::GridRenderer3D(*m_camera, document->worldBounds()));
+            }
         }
 
         void MapView3D::doRenderMap(Renderer::MapRenderer& renderer, Renderer::RenderContext& renderContext, Renderer::RenderBatch& renderBatch) {

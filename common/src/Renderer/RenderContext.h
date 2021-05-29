@@ -68,6 +68,7 @@ namespace TrenchBroom {
 
             bool m_showFog;
 
+            bool m_showGrid3D;
             bool m_showGrid;
             FloatType m_gridSize;
 
@@ -122,6 +123,9 @@ namespace TrenchBroom {
 
             bool showGrid() const;
             void setShowGrid(bool showGrid);
+
+            bool show3DGrid() const;
+            void setShow3DGrid(bool showGrid);
 
             const vm::bbox3f& softMapBounds() const;
             void setSoftMapBounds(const vm::bbox3f& softMapBounds);

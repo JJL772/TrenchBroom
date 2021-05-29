@@ -100,6 +100,7 @@ namespace TrenchBroom {
             QCheckBox* m_shadeFacesCheckBox;
             QCheckBox* m_showFogCheckBox;
             QCheckBox* m_showEdgesCheckBox;
+            QCheckBox* m_show3DGridCheckBox;
 
             QButtonGroup* m_entityLinkRadioGroup;
 
@@ -145,6 +146,7 @@ namespace TrenchBroom {
             void shadeFacesChanged(bool checked);
             void showFogChanged(bool checked);
             void showEdgesChanged(bool checked);
+            void show3DGridChanged(bool checked);
             void entityLinkModeChanged(int id);
             void showSoftMapBoundsChanged(bool checked);
             void restoreDefaultsClicked();
