@@ -135,6 +135,7 @@ namespace TrenchBroom {
 
         Preference<bool> TextureLock(IO::Path("Editor/Texture lock"), true);
         Preference<bool> UVLock(IO::Path("Editor/UV lock"), false);
+        Preference<bool> ChoosePointOnXY(IO::Path("Editor/Choose Point On XY"), true);
 
         Preference<IO::Path>& RendererFontPath() {
             static Preference<IO::Path> fontPath(IO::Path("Renderer/Font name"), IO::Path("fonts/SourceSansPro-Regular.otf"));
@@ -299,6 +300,7 @@ namespace TrenchBroom {
                 &TextureMagFilter,
                 &TextureLock,
                 &UVLock,
+                &ChoosePointOnXY,
                 &RendererFontPath(),
                 &RendererFontSize,
                 &BrowserFontSize,

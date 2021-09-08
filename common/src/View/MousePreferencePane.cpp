@@ -53,7 +53,8 @@ namespace TrenchBroom {
         m_rightKeyEditor(nullptr),
         m_upKeyEditor(nullptr),
         m_downKeyEditor(nullptr),
-        m_flyMoveSpeedSlider(nullptr) {
+        m_flyMoveSpeedSlider(nullptr),
+        m_selectOnXYCheckBox(nullptr) {
             createGui();
             bindEvents();
         }
@@ -92,6 +93,8 @@ namespace TrenchBroom {
             m_flyMoveSpeedSlider = new SliderWithLabel(0, 100);
             m_flyMoveSpeedSlider->setMaximumWidth(400);
 
+            m_selectOnXYCheckBox = new QCheckBox("Use point on XY plane as default");
+
             auto* layout = new FormWithSectionsLayout();
             layout->setContentsMargins(0, LayoutConstants::MediumVMargin, 0, 0);
             layout->setVerticalSpacing(2);
@@ -125,6 +128,9 @@ namespace TrenchBroom {
             layout->addRow("Speed", m_flyMoveSpeedSlider);
             layout->addRow("", makeInfo(new QLabel("Turn mouse wheel while holding right mouse button in 3D view to adjust speed on the fly.")));
 
+            layout->addSection("Selection Controls");
+            layout->addRow("", m_selectOnXYCheckBox);
+
             setLayout(layout);
             setMinimumWidth(400);
         }
@@ -152,6 +158,8 @@ namespace TrenchBroom {
             connect(m_downKeyEditor, &KeySequenceEdit::editingFinished, this, &MousePreferencePane::downKeyChanged);
 
             connect(m_flyMoveSpeedSlider, &SliderWithLabel::valueChanged, this, &MousePreferencePane::flyMoveSpeedChanged);
+
+            connect(m_selectOnXYCheckBox, &QCheckBox::stateChanged, this, &MousePreferencePane::selectOnXYChanged);
         }
 
         bool MousePreferencePane::doCanResetToDefaults() {
@@ -182,6 +190,8 @@ namespace TrenchBroom {
             prefs.resetToDefault(Preferences::CameraFlyDown());
 
             prefs.resetToDefault(Preferences::CameraFlyMoveSpeed);
+
+            prefs.resetToDefault(Preferences::ChoosePointOnXY);
         }
 
         void MousePreferencePane::doUpdateControls() {
@@ -207,6 +217,8 @@ namespace TrenchBroom {
             m_downKeyEditor->setKeySequence(pref(Preferences::CameraFlyDown()));
 
             m_flyMoveSpeedSlider->setRatio(pref(Preferences::CameraFlyMoveSpeed) / Preferences::MaxCameraFlyMoveSpeed);
+
+            m_selectOnXYCheckBox->setChecked(pref(Preferences::ChoosePointOnXY));
         }
 
         bool MousePreferencePane::doValidate() {
@@ -271,6 +283,12 @@ namespace TrenchBroom {
             const auto value = (state == Qt::Checked);
             PreferenceManager& prefs = PreferenceManager::instance();
             prefs.set(Preferences::CameraAltMoveInvert, value);
+        }
+
+        void MousePreferencePane::selectOnXYChanged(const int state) {
+            const auto value = (state == Qt::Checked);
+            PreferenceManager& prefs = PreferenceManager::instance();
+            prefs.set(Preferences::ChoosePointOnXY, value);
         }
 
         void MousePreferencePane::moveInCursorDirChanged(const int state) {

@@ -52,6 +52,8 @@ namespace TrenchBroom {
             KeySequenceEdit* m_upKeyEditor;
             KeySequenceEdit* m_downKeyEditor;
             SliderWithLabel* m_flyMoveSpeedSlider;
+
+            QCheckBox* m_selectOnXYCheckBox;
         public:
             explicit MousePreferencePane(QWidget* parent = nullptr);
 
@@ -78,6 +80,7 @@ namespace TrenchBroom {
             void enableAltMoveChanged(int state);
             void invertAltMoveAxisChanged(int state);
             void moveInCursorDirChanged(int state);
+            void selectOnXYChanged(const int state);
 
             void forwardKeyChanged();
             void backwardKeyChanged();
