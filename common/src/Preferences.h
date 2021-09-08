@@ -131,6 +131,7 @@ extern Preference<bool> EnableMSAA;
 
 extern Preference<bool> TextureLock;
 extern Preference<bool> UVLock;
+extern Preference<bool> ChoosePointOnXY;
 
 Preference<IO::Path>& RendererFontPath();
 extern Preference<int> RendererFontSize;

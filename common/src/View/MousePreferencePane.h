@@ -56,6 +56,7 @@ private:
   KeySequenceEdit* m_upKeyEditor;
   KeySequenceEdit* m_downKeyEditor;
   SliderWithLabel* m_flyMoveSpeedSlider;
+  QCheckBox* m_selectOnXYCheckBox;
 
 public:
   explicit MousePreferencePane(QWidget* parent = nullptr);
@@ -77,6 +78,7 @@ private slots:
   void panSpeedChanged(int value);
   void invertPanHAxisChanged(int state);
   void invertPanVAxisChanged(int state);
+  void selectOnXYChanged(const int state);
 
   void moveSpeedChanged(int value);
   void invertMouseWheelChanged(int state);

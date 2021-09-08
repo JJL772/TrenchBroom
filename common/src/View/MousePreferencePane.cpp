@@ -56,6 +56,7 @@ MousePreferencePane::MousePreferencePane(QWidget* parent)
   , m_upKeyEditor(nullptr)
   , m_downKeyEditor(nullptr)
   , m_flyMoveSpeedSlider(nullptr)
+  , m_selectOnXYCheckBox(nullptr)
 {
   createGui();
   bindEvents();
@@ -96,6 +97,8 @@ void MousePreferencePane::createGui()
   m_flyMoveSpeedSlider = new SliderWithLabel(0, 100);
   m_flyMoveSpeedSlider->setMaximumWidth(400);
 
+  m_selectOnXYCheckBox = new QCheckBox("Use point on XY plane as default");
+  
   auto* layout = new FormWithSectionsLayout();
   layout->setContentsMargins(0, LayoutConstants::MediumVMargin, 0, 0);
   layout->setVerticalSpacing(2);
@@ -132,6 +135,9 @@ void MousePreferencePane::createGui()
     makeInfo(new QLabel("Turn mouse wheel while holding right mouse button in 3D view to "
                         "adjust speed on the fly.")));
 
+  layout->addSection("Selection Controls");
+  layout->addRow("", m_selectOnXYCheckBox);
+  
   setLayout(layout);
   setMinimumWidth(400);
 }
@@ -232,6 +238,7 @@ void MousePreferencePane::bindEvents()
     &SliderWithLabel::valueChanged,
     this,
     &MousePreferencePane::flyMoveSpeedChanged);
+  connect(m_selectOnXYCheckBox, &QCheckBox::stateChanged, this, &MousePreferencePane::selectOnXYChanged);
 }
 
 bool MousePreferencePane::doCanResetToDefaults()
@@ -264,6 +271,8 @@ void MousePreferencePane::doResetToDefaults()
   prefs.resetToDefault(Preferences::CameraFlyDown());
 
   prefs.resetToDefault(Preferences::CameraFlyMoveSpeed);
+  
+  prefs.resetToDefault(Preferences::ChoosePointOnXY);
 }
 
 void MousePreferencePane::doUpdateControls()
@@ -291,6 +300,8 @@ void MousePreferencePane::doUpdateControls()
 
   m_flyMoveSpeedSlider->setRatio(
     pref(Preferences::CameraFlyMoveSpeed) / Preferences::MaxCameraFlyMoveSpeed);
+  
+  m_selectOnXYCheckBox->setChecked(pref(Preferences::ChoosePointOnXY));
 }
 
 bool MousePreferencePane::doValidate()
@@ -425,6 +436,12 @@ void MousePreferencePane::setKeySequence(
   {
     editor->setKeySequence(prefs.get(preference));
   }
+}
+
+void MousePreferencePane::selectOnXYChanged(const int state) {
+  const auto value = (state == Qt::Checked);
+  PreferenceManager& prefs = PreferenceManager::instance();
+  prefs.set(Preferences::ChoosePointOnXY, value);
 }
 
 bool MousePreferencePane::hasConflict(

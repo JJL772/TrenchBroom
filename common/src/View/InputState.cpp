@@ -23,8 +23,11 @@
 #include "Macros.h"
 #include "Model/CompareHits.h"
 #include "Renderer/Camera.h"
+#include "Preferences.h"
+#include "PreferenceManager.h"
 
 #include <vecmath/vec.h>
+#include <vecmath/intersection.h>
 
 #include <QCursor>
 
@@ -226,9 +229,23 @@ const vm::vec3 InputState::defaultPoint() const
   return vm::vec3(camera().defaultPoint());
 }
 
-const vm::vec3 InputState::defaultPointUnderMouse() const
-{
-  return vm::vec3(camera().defaultPoint(pickRay()));
+const vm::vec3 InputState::defaultPointUnderMouse() const {
+  if(pref(Preferences::ChoosePointOnXY)) {
+    // If we don't hit any existing brushes/entites/whatever, trace a ray against the XY plane and use that as our base
+    const auto ray = camera().pickRay(mouseX(), mouseY());
+    vm::plane3f xy(vm::vec3f(0, 0, 0), vm::vec3f(0, 0, 1));
+    const auto dist = vm::intersect_ray_plane(ray, xy);
+
+    // If the trace fails, we're probably below the XY plane, so just use the default point under mouse
+    if (vm::is_nan(dist)) {
+      return vm::vec3(camera().defaultPoint(pickRay()));
+    } else {
+      return vm::vec3(vm::point_at_distance(ray, dist));
+    }
+  }
+  else {
+    return vm::vec3(camera().defaultPoint(pickRay()));
+  }
 }
 
 const Renderer::Camera& InputState::camera() const

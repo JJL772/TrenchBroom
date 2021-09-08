@@ -552,8 +552,9 @@ void MapView3D::doPreRender()
   m_flyModeHelper->pollAndUpdate();
 }
 
-void MapView3D::doRenderGrid(Renderer::RenderContext&, Renderer::RenderBatch&) {
+void MapView3D::doRenderGrid(Renderer::RenderContext& context, Renderer::RenderBatch& renderBatch) {
   auto document = kdl::mem_lock(m_document);
+  
   if(context.show3DGrid()) {
     renderBatch.addOneShot(new Renderer::GridRenderer3D(*m_camera, document->worldBounds()));
   }
