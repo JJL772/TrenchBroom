@@ -190,6 +190,7 @@ Preference<bool> EnableMSAA("Renderer/Enable multisampling", true);
 
 Preference<bool> TextureLock("Editor/Texture lock", true);
 Preference<bool> UVLock("Editor/UV lock", false);
+Preference<bool> ChoosePointOnXY("Editor/Choose Point On XY", true);
 
 Preference<std::filesystem::path>& RendererFontPath()
 {
@@ -385,6 +386,7 @@ const std::vector<PreferenceBase*>& staticPreferences()
     &TextureMagFilter,
     &TextureLock,
     &UVLock,
+    &ChoosePointOnXY,
     &RendererFontPath(),
     &RendererFontSize,
     &BrowserFontSize,

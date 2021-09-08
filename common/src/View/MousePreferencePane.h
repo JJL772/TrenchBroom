@@ -65,6 +65,7 @@ private:
   QLabel* m_downKeyConflictIcon = nullptr;
 
   SliderWithLabel* m_flyMoveSpeedSlider = nullptr;
+  QCheckBox* m_selectOnXYCheckBox = nullptr;
 
 public:
   explicit MousePreferencePane(QWidget* parent = nullptr);
@@ -86,6 +87,7 @@ private slots:
   void panSpeedChanged(int value);
   void invertPanHAxisChanged(int state);
   void invertPanVAxisChanged(int state);
+  void selectOnXYChanged(const int state);
 
   void moveSpeedChanged(int value);
   void invertMouseWheelChanged(int state);
