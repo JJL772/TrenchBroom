@@ -838,10 +838,10 @@ namespace TrenchBroom {
 
             Renderer::RenderBatch renderBatch(vboManager());
 
-            doRenderGrid(renderContext, renderBatch);
             doRenderMap(m_renderer, renderContext, renderBatch);
             doRenderTools(m_toolBox, renderContext, renderBatch);
             doRenderExtras(renderContext, renderBatch);
+            doRenderGrid(renderContext, renderBatch);
 
             renderCoordinateSystem(renderContext, renderBatch);
             renderSoftMapBounds(renderContext, renderBatch);
