@@ -1,4 +1,9 @@
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/GenerateManual.cmake)
+
+option(BUILD_MANUAL "Enables the generation of the TrenchBroom manual" OFF)
+
+if (${BUILD_MANUAL})
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/GenerateManual.cmake)
+endif()
 
 set(APP_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(APP_RESOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/resources")
@@ -110,7 +115,7 @@ macro(configure_app_target APP_TARGET_NAME SHOULD_BUILD_MANUAL)
     # Xcode "new build system" does't allow custom commands to be depended on by two unrelated targets
     # In this case, ${INDEX_OUTPUT_PATH} is depended on by TrenchBroom and GenerateManual
     # so we must make TrenchBroom depend on GenerateManual (see #3608)
-    if (${SHOULD_BUILD_MANUAL})
+    if (${SHOULD_BUILD_MANUAL} AND ${BUILD_MANUAL})
         add_dependencies(${APP_TARGET_NAME} GenerateManual)
     endif()
     set_compiler_config(${APP_TARGET_NAME})
@@ -214,7 +219,7 @@ macro(configure_app_target APP_TARGET_NAME SHOULD_BUILD_MANUAL)
                 COMMAND ${CMAKE_COMMAND} -E make_directory "${APP_RESOURCE_DEST_DIR}/stylesheets/"
                 COMMAND ${CMAKE_COMMAND} -E copy_directory "${APP_RESOURCE_DIR}/stylesheets" "${APP_RESOURCE_DEST_DIR}/stylesheets")
 
-        if (${SHOULD_BUILD_MANUAL})
+        if (${SHOULD_BUILD_MANUAL} AND ${BUILD_MANUAL})
             # Copy manual files to resource directory
             add_custom_command(TARGET ${APP_TARGET_NAME} POST_BUILD
                     COMMAND ${CMAKE_COMMAND} -E make_directory "${APP_RESOURCE_DEST_DIR}/manual/"

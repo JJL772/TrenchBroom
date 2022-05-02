@@ -1,3 +1,5 @@
+option(BUILD_TESTS "Build regression and performance tests" OFF)
+
 set(COMMON_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(COMMON_SOURCE
@@ -1077,5 +1079,7 @@ target_include_directories(common PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 add_custom_target(generate_version ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/GenerateVersion.cmake")
 add_dependencies(common generate_version)
 
-add_subdirectory(test)
-add_subdirectory(benchmark)
+if(BUILD_TESTS)
+    add_subdirectory(test)
+    add_subdirectory(benchmark)
+endif()
