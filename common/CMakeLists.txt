@@ -91,6 +91,7 @@ set(COMMON_SOURCE
         ${COMMON_SOURCE_DIR}/IO/WadFileSystem.cpp
         ${COMMON_SOURCE_DIR}/IO/WalTextureReader.cpp
         ${COMMON_SOURCE_DIR}/IO/WorldReader.cpp
+        ${COMMON_SOURCE_DIR}/IO/VmfSerializer.cpp
         ${COMMON_SOURCE_DIR}/IO/ZipFileSystem.cpp
         ${COMMON_SOURCE_DIR}/Model/BezierPatch.cpp
         ${COMMON_SOURCE_DIR}/Model/Brush.cpp

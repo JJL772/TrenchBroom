@@ -13,3 +13,6 @@
 [submodule "lib/fmt"]
 	path = lib/fmt
 	url = https://github.com/fmtlib/fmt
+[submodule "lib/vtflib"]
+	path = lib/vtflib
+	url = https://github.com/ChaosInitiative/VTFLib

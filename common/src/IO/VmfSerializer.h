@@ -19,59 +19,53 @@
 
 #pragma once
 
+#include "FloatType.h"
 #include "IO/NodeSerializer.h"
-#include "Model/MapFormat.h"
 
+#include <vecmath/forward.h>
+
+#include <array>
 #include <iosfwd>
-#include <memory>
+#include <map>
+#include <optional>
+#include <string>
+#include <variant>
 #include <vector>
+#include <ostream>
 
 namespace TrenchBroom {
+    namespace Assets {
+        class Texture;
+    }
+
     namespace Model {
-        class BezierPatch;
-        class Brush;
         class BrushNode;
         class BrushFace;
         class EntityProperty;
         class Node;
-        class PatchNode;
     }
 
     namespace IO {
-        class MapFileSerializer : public NodeSerializer {
-        protected:
-            using LineStack = std::vector<size_t>;
-            LineStack m_startLineStack;
-            size_t m_line;
-            std::ostream& m_stream;
-
-            struct PrecomputedString {
-                std::string string;
-                size_t lineCount;
-            };
-            std::unordered_map<const Model::Node*, PrecomputedString> m_nodeToPrecomputedString;
+        class VmfSerializer : public NodeSerializer {
         public:
-            static std::unique_ptr<NodeSerializer> create(Model::MapFormat format, std::ostream& stream);
-        protected:
-            explicit MapFileSerializer(std::ostream& stream);
+            explicit VmfSerializer(std::ostream& vmfStream);
         private:
+			// NodeSerializer overrides
+		
             void doBeginFile(const std::vector<const Model::Node*>& rootNodes) override;
             void doEndFile() override;
-
             void doBeginEntity(const Model::Node* node) override;
             void doEndEntity(const Model::Node* node) override;
-            void doEntityProperty(const Model::EntityProperty& attribute) override;
+            void doEntityProperty(const Model::EntityProperty& property) override;
             void doBrush(const Model::BrushNode* brush) override;
-            void doBrushFace(const Model::BrushFace& face) override;
-
             void doPatch(const Model::PatchNode* patchNode) override;
-        private:
-            void setFilePosition(const Model::Node* node);
-            size_t startLine();
-        private: // threadsafe
-            virtual void doWriteBrushFace(std::ostream& stream, const Model::BrushFace& face) const = 0;
-            PrecomputedString writeBrushFaces(const Model::Brush& brush) const;
-            PrecomputedString writePatch(const Model::BezierPatch& patch) const;
+            void doBrushFace(const TrenchBroom::Model::BrushFace&) override;
+
+
+            void writeBrushFace(const Model::BrushFace& face);
+        protected:
+            std::ostream& m_stream;
+            int m_id = 0;
         };
     }
 }

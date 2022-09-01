@@ -18,6 +18,7 @@
  */
 
 #include "MapFileSerializer.h"
+#include "VmfSerializer.h"
 
 #include "Ensure.h"
 #include "Exceptions.h"
@@ -231,6 +232,8 @@ namespace TrenchBroom {
                     return std::make_unique<ValveFileSerializer>(stream);
                 case Model::MapFormat::Hexen2:
                     return std::make_unique<Hexen2FileSerializer>(stream);
+                case Model::MapFormat::Source:
+                    return std::make_unique<VmfSerializer>(stream);
                 case Model::MapFormat::Unknown:
                     throw FileFormatException("Unknown map file format");
                 switchDefault()
